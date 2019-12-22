@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+
+.container
+{
+    display:inline-block;
+}
+
+.card-image
+{
+    max-height: 60px;
+    max-width: 60px;
+    object-fit: cover;
+}

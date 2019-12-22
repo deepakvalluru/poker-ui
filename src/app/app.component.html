@@ -1,4 +1,7 @@
 <h1 style="background-color: blue; color: white;">App Works!</h1>
-<div></div>
-<h2>data={{game.deck.cards[0].number}}</h2>
+<div *ngIf="game && game.deck && game.deck.cards.length > 0">
+  <div class="container"  *ngFor="let card of game.deck.cards; let i = index">
+    <img src="{{card.imagePath}}" class="card-image"/>
+  </div>
+</div>
 <router-outlet></router-outlet>

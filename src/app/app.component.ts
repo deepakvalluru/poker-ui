@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PokerService } from './poker.service';
 import { Game } from './model/Game';
+import { Card } from './model/Card';
 
 @Component({
   selector: 'app-root',
@@ -26,6 +27,11 @@ export class AppComponent implements OnInit {
       data => 
       {
         this.game = data;
+        for( let i=0; i< this.game.deck.cards.length; i++)
+        {
+          this.game.deck.cards[i].imagePath = "assets" + this.game.deck.cards[i].imagePath;
+        }
+        
       } );
   }
 
