@@ -1,7 +1,16 @@
 <h1 style="background-color: blue; color: white;">App Works!</h1>
-<div *ngIf="game && game.deck && game.deck.cards.length > 0">
-  <div class="container"  *ngFor="let card of game.deck.cards; let i = index">
-    <img src="{{card.imagePath}}" class="card-image"/>
-  </div>
+<div class="container" *ngIf="game && game.deck && game.deck.cards.length > 0">
+  <section class="container"  *ngFor="let card of game.deck.cards">
+    <div *ngIf="card.suit==='SPADES'"><img src="{{card.imagePath}}" class="card-image"/></div>
+  </section>
+  <section class="container"  *ngFor="let card of game.deck.cards">
+    <div *ngIf="card.suit==='HEARTS'"><img src="{{card.imagePath}}" class="card-image"/></div>
+  </section>
+  <section class="container"  *ngFor="let card of game.deck.cards">
+    <div *ngIf="card.suit==='DIAMONDS'"><img src="{{card.imagePath}}" class="card-image"/></div>
+  </section>
+  <section class="container"  *ngFor="let card of game.deck.cards">
+    <div *ngIf="card.suit==='CLUBS'"><img src="{{card.imagePath}}" class="card-image"/></div>
+  </section>
 </div>
 <router-outlet></router-outlet>
