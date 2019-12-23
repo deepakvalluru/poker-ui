@@ -3,6 +3,8 @@ export class Card
     number : String
     suit : String
     imagePath : String
+    isCardDealed : boolean
+    position : number
     
     constructor( number : String, suit : String, imagePath : String )
     {

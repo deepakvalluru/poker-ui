@@ -1,0 +1,15 @@
+<p>deck works!</p>
+<div class="container" *ngIf="deck && deck.cards.length > 0">
+    <section class="container"  *ngFor="let card of deck.cards">
+      <div *ngIf="card.suit==='SPADES'"><img src="{{card.imagePath}}" class="card-image"/></div>
+    </section>
+    <section class="container"  *ngFor="let card of deck.cards">
+      <div *ngIf="card.suit==='HEARTS'"><img src="{{card.imagePath}}" class="card-image"/></div>
+    </section>
+    <section class="container"  *ngFor="let card of deck.cards">
+      <div *ngIf="card.suit==='DIAMONDS'"><img src="{{card.imagePath}}" class="card-image"/></div>
+    </section>
+    <section class="container"  *ngFor="let card of deck.cards">
+      <div *ngIf="card.suit==='CLUBS'"><img src="{{card.imagePath}}" class="card-image"/></div>
+    </section>
+  </div>
