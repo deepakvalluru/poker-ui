@@ -1,5 +1,7 @@
 <h1 style="background-color: blue; color: white;">App Works!</h1>
 <div *ngIf="game && game.deck">
   <app-deck [deck]="game.deck"></app-deck>
+  <br><br>
+  <app-board></app-board>
 </div>
 <router-outlet></router-outlet>
