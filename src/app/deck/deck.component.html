@@ -1,15 +1,60 @@
 <p>deck works!</p>
-<div class="container" *ngIf="deck && deck.cards.length > 0">
-    <section class="container"  *ngFor="let card of deck.cards">
-      <div *ngIf="card.suit==='SPADES'"><img src="{{card.imagePath}}" class="card-image"/></div>
-    </section>
-    <section class="container"  *ngFor="let card of deck.cards">
-      <div *ngIf="card.suit==='HEARTS'"><img src="{{card.imagePath}}" class="card-image"/></div>
-    </section>
-    <section class="container"  *ngFor="let card of deck.cards">
-      <div *ngIf="card.suit==='DIAMONDS'"><img src="{{card.imagePath}}" class="card-image"/></div>
-    </section>
-    <section class="container"  *ngFor="let card of deck.cards">
-      <div *ngIf="card.suit==='CLUBS'"><img src="{{card.imagePath}}" class="card-image"/></div>
-    </section>
+<div *ngIf="deck" id="deck">
+    <img class = "card-image" [src]="getImage( 'ACE', 'SPADES' )" (click)="dealDeckCard('ACE', 'SPADES')">
+    <img class = "card-image" [src]="getImage( 'KING', 'SPADES' )" (click)="dealDeckCard('KING', 'SPADES')">
+    <img class = "card-image" [src]="getImage( 'QUEEN', 'SPADES' )" (click)="dealDeckCard('QUEEN', 'SPADES')">
+    <img class = "card-image" [src]="getImage( 'JACK', 'SPADES' )" (click)="dealDeckCard('JACK', 'SPADES')">
+    <img class = "card-image" [src]="getImage( 'TEN', 'SPADES' )" (click)="dealDeckCard('TEN', 'SPADES')">
+    <img class = "card-image" [src]="getImage( 'NINE', 'SPADES' )" (click)="dealDeckCard('NINE', 'SPADES')">
+    <img class = "card-image" [src]="getImage( 'EIGHT', 'SPADES' )" (click)="dealDeckCard('EIGHT', 'SPADES')">
+    <img class = "card-image" [src]="getImage( 'SEVEN', 'SPADES' )" (click)="dealDeckCard('SEVEN', 'SPADES')">
+    <img class = "card-image" [src]="getImage( 'SIX', 'SPADES' )" (click)="dealDeckCard('SIX', 'SPADES')">
+    <img class = "card-image" [src]="getImage( 'FIVE', 'SPADES' )" (click)="dealDeckCard('FIVE', 'SPADES')">
+    <img class = "card-image" [src]="getImage( 'FOUR', 'SPADES' )" (click)="dealDeckCard('FOUR', 'SPADES')">
+    <img class = "card-image" [src]="getImage( 'THREE', 'SPADES' )" (click)="dealDeckCard('THREE', 'SPADES')">
+    <img class = "card-image" [src]="getImage( 'TWO', 'SPADES' )" (click)="dealDeckCard('TWO', 'SPADES')">
+
+    <img class = "card-image" [src]="getImage( 'ACE', 'HEARTS' )" (click)="dealDeckCard('ACE', 'HEARTS')">
+    <img class = "card-image" [src]="getImage( 'KING', 'HEARTS' )" (click)="dealDeckCard('KING', 'HEARTS')">
+    <img class = "card-image" [src]="getImage( 'QUEEN', 'HEARTS' )" (click)="dealDeckCard('QUEEN', 'HEARTS')">
+    <img class = "card-image" [src]="getImage( 'JACK', 'HEARTS' )" (click)="dealDeckCard('JACK', 'HEARTS')">
+    <img class = "card-image" [src]="getImage( 'TEN', 'HEARTS' )" (click)="dealDeckCard('TEN', 'HEARTS')">
+    <img class = "card-image" [src]="getImage( 'NINE', 'HEARTS' )" (click)="dealDeckCard('NINE', 'HEARTS')">
+    <img class = "card-image" [src]="getImage( 'EIGHT', 'HEARTS' )" (click)="dealDeckCard('EIGHT', 'HEARTS')">
+    <img class = "card-image" [src]="getImage( 'SEVEN', 'HEARTS' )" (click)="dealDeckCard('SEVEN', 'HEARTS')">
+    <img class = "card-image" [src]="getImage( 'SIX', 'HEARTS' )" (click)="dealDeckCard('SIX', 'HEARTS')">
+    <img class = "card-image" [src]="getImage( 'FIVE', 'HEARTS' )" (click)="dealDeckCard('FIVE', 'HEARTS')">
+    <img class = "card-image" [src]="getImage( 'FOUR', 'HEARTS' )" (click)="dealDeckCard('FOUR', 'HEARTS')">
+    <img class = "card-image" [src]="getImage( 'THREE', 'HEARTS' )" (click)="dealDeckCard('THREE', 'HEARTS')">
+    <img class = "card-image" [src]="getImage( 'TWO', 'HEARTS' )" (click)="dealDeckCard('TWO', 'HEARTS')">
+
+    <br>
+
+    <img class = "card-image" [src]="getImage( 'ACE', 'DIAMONDS' )" (click)="dealDeckCard('ACE', 'DIAMONDS')">
+    <img class = "card-image" [src]="getImage( 'KING', 'DIAMONDS' )" (click)="dealDeckCard('KING', 'DIAMONDS')">
+    <img class = "card-image" [src]="getImage( 'QUEEN', 'DIAMONDS' )" (click)="dealDeckCard('QUEEN', 'DIAMONDS')">
+    <img class = "card-image" [src]="getImage( 'JACK', 'DIAMONDS' )" (click)="dealDeckCard('JACK', 'DIAMONDS')">
+    <img class = "card-image" [src]="getImage( 'TEN', 'DIAMONDS' )" (click)="dealDeckCard('TEN', 'DIAMONDS')">
+    <img class = "card-image" [src]="getImage( 'NINE', 'DIAMONDS' )" (click)="dealDeckCard('NINE', 'DIAMONDS')">
+    <img class = "card-image" [src]="getImage( 'EIGHT', 'DIAMONDS' )" (click)="dealDeckCard('EIGHT', 'DIAMONDS')">
+    <img class = "card-image" [src]="getImage( 'SEVEN', 'DIAMONDS' )" (click)="dealDeckCard('SEVEN', 'DIAMONDS')">
+    <img class = "card-image" [src]="getImage( 'SIX', 'DIAMONDS' )" (click)="dealDeckCard('SIX', 'DIAMONDS')">
+    <img class = "card-image" [src]="getImage( 'FIVE', 'DIAMONDS' )" (click)="dealDeckCard('FIVE', 'DIAMONDS')">
+    <img class = "card-image" [src]="getImage( 'FOUR', 'DIAMONDS' )" (click)="dealDeckCard('FOUR', 'DIAMONDS')">
+    <img class = "card-image" [src]="getImage( 'THREE', 'DIAMONDS' )" (click)="dealDeckCard('THREE', 'DIAMONDS')">
+    <img class = "card-image" [src]="getImage( 'TWO', 'DIAMONDS' )" (click)="dealDeckCard('TWO', 'DIAMONDS')">
+
+    <img class = "card-image" [src]="getImage( 'ACE', 'CLUBS' )" (click)="dealDeckCard('ACE', 'CLUBS')">
+    <img class = "card-image" [src]="getImage( 'KING', 'CLUBS' )" (click)="dealDeckCard('KING', 'CLUBS')">
+    <img class = "card-image" [src]="getImage( 'QUEEN', 'CLUBS' )" (click)="dealDeckCard('QUEEN', 'CLUBS')">
+    <img class = "card-image" [src]="getImage( 'JACK', 'CLUBS' )" (click)="dealDeckCard('JACK', 'CLUBS')">
+    <img class = "card-image" [src]="getImage( 'TEN', 'CLUBS' )" (click)="dealDeckCard('TEN', 'CLUBS')">
+    <img class = "card-image" [src]="getImage( 'NINE', 'CLUBS' )" (click)="dealDeckCard('NINE', 'CLUBS')">
+    <img class = "card-image" [src]="getImage( 'EIGHT', 'CLUBS' )" (click)="dealDeckCard('EIGHT', 'CLUBS')">
+    <img class = "card-image" [src]="getImage( 'SEVEN', 'CLUBS' )" (click)="dealDeckCard('SEVEN', 'CLUBS')">
+    <img class = "card-image" [src]="getImage( 'SIX', 'CLUBS' )" (click)="dealDeckCard('SIX', 'CLUBS')">
+    <img class = "card-image" [src]="getImage( 'FIVE', 'CLUBS' )" (click)="dealDeckCard('FIVE', 'CLUBS')">
+    <img class = "card-image" [src]="getImage( 'FOUR', 'CLUBS' )" (click)="dealDeckCard('FOUR', 'CLUBS')">
+    <img class = "card-image" [src]="getImage( 'THREE', 'CLUBS' )" (click)="dealDeckCard('THREE', 'CLUBS')">
+    <img class = "card-image" [src]="getImage( 'TWO', 'CLUBS' )" (click)="dealDeckCard('TWO', 'CLUBS')">
   </div>

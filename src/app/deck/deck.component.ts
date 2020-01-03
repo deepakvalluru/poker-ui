@@ -10,32 +10,44 @@ export class DeckComponent implements OnInit {
 
   constructor() { }
 
+  private _deck : Deck;
+
   ngOnInit() {
   }
-
-  spadesPosition : Array<Number> = [0,1,2,3,4,5,6,7,8,9,10,11,12];
-  heartsPosition : Array<Number> = [13,14,15,16,17,18,19,20,21,22,23,24,25];
-  diamondsPosition : Array<Number> = [26,27,28,29,30,31,32,33,34,35,36,37,38];
-  clubsPosition: Array<Number> = [39,40,41,42,43,44,45,46,47,48,49,50,51];
 
   @Input() 
   set deck( deck : Deck )
   {
     if( deck != undefined )
     {
-      this.deck = deck;
+      this._deck = deck;
     }
     
-    for( let i=0; i< this.deck.cards.length; i++)
+    for( let i=0; i< this._deck.cards.length; i++)
     {
-      this.deck.cards[i].imagePath = "assets" + this.deck.cards[i].imagePath;
-      this.deck.cards[i].position = i;
-      this.deck.cards[i].isCardDealed = false;
+      this._deck.cards[i].imagePath = "http://localhost:8080/api/pokergame" + this._deck.cards[i].imagePath;
+      this._deck.cards[i].isCardDealed = false;
     }
+  }
+
+  getImage( number : String, suit : String )
+  {
+    for( let card of this._deck.cards )
+    {
+      if( card.number === number && card.suit === suit )
+      {
+        return card.imagePath;
+      }
+    }
+  }
+
+  dealDeckCard( number : String, suit : String )
+  {
+    console.log( number + " of " + suit + " dealed");
   }
 
   get deck() : Deck
   {
-    return this.deck
+    return this._deck
   }
 }
