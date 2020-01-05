@@ -1,5 +1,5 @@
 <p>deck works!</p>
-<div *ngIf="deck" id="deck">
+<div *ngIf="deck" class="deck">
     <img class = "card-image" [src]="getImage( 'ACE', 'SPADES' )" (click)="dealDeckCard('ACE', 'SPADES')">
     <img class = "card-image" [src]="getImage( 'KING', 'SPADES' )" (click)="dealDeckCard('KING', 'SPADES')">
     <img class = "card-image" [src]="getImage( 'QUEEN', 'SPADES' )" (click)="dealDeckCard('QUEEN', 'SPADES')">
@@ -13,7 +13,7 @@
     <img class = "card-image" [src]="getImage( 'FOUR', 'SPADES' )" (click)="dealDeckCard('FOUR', 'SPADES')">
     <img class = "card-image" [src]="getImage( 'THREE', 'SPADES' )" (click)="dealDeckCard('THREE', 'SPADES')">
     <img class = "card-image" [src]="getImage( 'TWO', 'SPADES' )" (click)="dealDeckCard('TWO', 'SPADES')">
-
+    
     <img class = "card-image" [src]="getImage( 'ACE', 'HEARTS' )" (click)="dealDeckCard('ACE', 'HEARTS')">
     <img class = "card-image" [src]="getImage( 'KING', 'HEARTS' )" (click)="dealDeckCard('KING', 'HEARTS')">
     <img class = "card-image" [src]="getImage( 'QUEEN', 'HEARTS' )" (click)="dealDeckCard('QUEEN', 'HEARTS')">

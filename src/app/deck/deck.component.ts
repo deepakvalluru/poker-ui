@@ -18,16 +18,15 @@ export class DeckComponent implements OnInit {
   @Input() 
   set deck( deck : Deck )
   {
-    if( deck != undefined )
+    if( deck != undefined && deck != null )
     {
       this._deck = deck;
-    }
-    
-    for( let i=0; i< this._deck.cards.length; i++)
-    {
-      this._deck.cards[i].imagePath = "http://localhost:8080/api/pokergame" + this._deck.cards[i].imagePath;
-      this._deck.cards[i].isCardDealed = false;
-    }
+      for( let i=0; i< this._deck.cards.length; i++)
+      {
+        this._deck.cards[i].imagePath = "http://localhost:8080/api/pokergame" + this._deck.cards[i].imagePath;
+        this._deck.cards[i].isCardDealed = false;
+      }
+    }    
   }
 
   getImage( number : String, suit : String )
@@ -39,6 +38,7 @@ export class DeckComponent implements OnInit {
         return card.imagePath;
       }
     }
+    return "http://localhost:8080/api/pokergame" + "/images/gray_back.png";
   }
 
   dealDeckCard( number : String, suit : String )

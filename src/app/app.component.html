@@ -2,6 +2,6 @@
 <div *ngIf="game && game.deck">
   <app-deck [deck]="game.deck"></app-deck>
   <br><br>
-  <app-board></app-board>
+  <app-board [board]="game.boardCards"></app-board>
 </div>
 <router-outlet></router-outlet>
