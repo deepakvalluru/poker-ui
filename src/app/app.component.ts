@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { PokerService } from './poker.service';
 import { Game } from './model/Game';
+import { ActiveCardPosition } from './model/ActiveCardPosition';
 
 @Component({
   selector: 'app-root',
@@ -13,8 +14,10 @@ export class AppComponent implements OnInit {
   {
     this.getData();
   }
+
   title = 'poker-ui';
   game : Game
+  activeCard : ActiveCardPosition
 
   constructor( private pokerService : PokerService )
   {
@@ -29,5 +32,9 @@ export class AppComponent implements OnInit {
       } );
   }
 
-  
+  receiveMessage($event : ActiveCardPosition) 
+  {
+    this.activeCard = $event
+    console.log( "Event Received in App Component: "+this.activeCard.isBoard + " - " +this.activeCard.cardPosition );
+  }
 }
