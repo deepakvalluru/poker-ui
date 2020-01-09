@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, Output } from "@angular/core";
 import { Deck } from "../model/Deck";
 import { ActiveCardPosition } from "../model/ActiveCardPosition";
 import { CardDeal } from "../model/CardDeal";
@@ -6,6 +6,7 @@ import { Game } from "../model/Game";
 import { Card } from "../model/Card";
 import { Player } from "../model/Player";
 import { PokerService } from '../poker.service';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: "app-deck",
@@ -20,18 +21,6 @@ export class DeckComponent implements OnInit {
   private _game: Game;
 
   ngOnInit() {}
-
-  @Input()
-  set deck(deck: Deck) {
-    if (deck != undefined && deck != null) {
-      this._deck = deck;
-      for (let i = 0; i < this._deck.cards.length; i++) {
-        this._deck.cards[i].imagePath =
-          "http://localhost:8080/api/pokergame" + this._deck.cards[i].imagePath;
-        this._deck.cards[i].isCardDealed = false;
-      }
-    }
-  }
 
   @Input()
   set activeCard(activeCard: ActiveCardPosition) {
@@ -49,8 +38,17 @@ export class DeckComponent implements OnInit {
   @Input()
   set game(game: Game) {
     this._game = game;
+    if (game.deck != undefined && game.deck != null) {
+      this._deck = game.deck;
+    }
     console.log("received input for game in Deck Component");
   }
+
+  @Output() 
+  gameEvent : EventEmitter<Game> = new EventEmitter();
+
+  @Output() 
+  dealtCardEvent : EventEmitter<Card> = new EventEmitter();
 
   getImage(number: String, suit: String) {
     for (let card of this._deck.cards) {
@@ -65,9 +63,9 @@ export class DeckComponent implements OnInit {
     console.log(number + " of " + suit + " dealed");
     let cardDeal = new CardDeal(
       this._game,
-      new Card(number, suit, null, false, false),
-      this._activeCard.isPlayer,
-      this._activeCard.isBoard,
+      new Card(number, suit, this.getImage(number, suit), false, false),
+      this._activeCard != undefined ? this._activeCard.isPlayer : false,
+      this._activeCard != undefined ? this._activeCard.isBoard : false,
       new Player(this._activeCard.playerName, null)
     );
     
@@ -76,6 +74,8 @@ export class DeckComponent implements OnInit {
       {
         this._game = data.game;
         this._deck = data.game.deck;
+        this.gameEvent.emit( this._game );
+        this.dealtCardEvent.emit( cardDeal.dealtCard );
       } 
     );
 

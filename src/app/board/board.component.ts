@@ -14,15 +14,16 @@ export class BoardComponent implements OnInit {
   constructor() { }
 
   private _board : SetOfCards
-  private flop1 : Card
-  private flop2 : Card
-  private flop3 : Card
-  private turn : Card
-  private river : Card
-  activeCardPosition : ActiveCardPosition
+  private flop1 : Card = new Card(undefined, undefined, undefined, undefined, false);
+  private flop2 : Card = new Card(undefined, undefined, undefined, undefined, false);
+  private flop3 : Card = new Card(undefined, undefined, undefined, undefined, false);
+  private turn : Card = new Card(undefined, undefined, undefined, undefined, false);
+  private river : Card = new Card(undefined, undefined, undefined, undefined, false);
+  private _activeCard : ActiveCardPosition
+  private _dealtCard : Card
 
   @Output() 
-  messageEvent : EventEmitter<ActiveCardPosition> = new EventEmitter();
+  activePositionEvent : EventEmitter<ActiveCardPosition> = new EventEmitter();
 
   @Input()
   set board( boardCards : SetOfCards )
@@ -33,16 +34,54 @@ export class BoardComponent implements OnInit {
       for( let i=0; i< this._board.cards.length; i++)
       {
         this._board.cards[i].imagePath = "http://localhost:8080/api/pokergame" + this._board.cards[i].imagePath;
-      }
-
-      this.flop1 = boardCards[0] ? boardCards[0] : new Card(undefined, undefined, undefined, undefined, false);
-      this.flop2 = boardCards[1] ? boardCards[1] : new Card(undefined, undefined, undefined, undefined, false);
-      this.flop3 = boardCards[2] ? boardCards[2] : new Card(undefined, undefined, undefined, undefined, false);
-      this.turn  = boardCards[3] ? boardCards[3] : new Card(undefined, undefined, undefined, undefined, false);
-      this.river = boardCards[4] ? boardCards[4] : new Card(undefined, undefined, undefined, undefined, false);
+      }  
 
     }
     
+  }
+
+  @Input()
+  set activeCard(activeCard: ActiveCardPosition)
+  {
+    this._activeCard = activeCard;
+    if( this._activeCard != undefined && this._activeCard.isBoard == true )
+    {
+
+    }
+  }
+
+  @Input()
+  set dealtCard( dealtCard : Card )
+  {
+    this._dealtCard = dealtCard;
+    if( this._activeCard != undefined && this._activeCard.isBoard )
+    {
+      let cardPosition : String = this._activeCard.cardPosition;
+
+      switch( cardPosition )
+      {
+        case "flop1":
+          this.flop1 = dealtCard;
+          break;
+        
+        case "flop2":
+          this.flop2 = dealtCard;
+          break;  
+
+        case "flop3":
+          this.flop3 = dealtCard;
+          break;
+
+        case "turn":
+        this.turn = dealtCard;
+        break;
+
+        case "river":
+        this.river = dealtCard;
+        break;
+      }
+
+    }
   }
 
   get board() : SetOfCards
@@ -60,7 +99,7 @@ export class BoardComponent implements OnInit {
       this.turn.active  = false;
       this.river.active = false;
       card.active = true;
-      this.messageEvent.emit( new ActiveCardPosition( false, true, cardPosition, null ) );
+      this.activePositionEvent.emit( new ActiveCardPosition( false, true, cardPosition, null ) );
     }
     console.log( "back to deck" + card );
   }
@@ -71,9 +110,15 @@ export class BoardComponent implements OnInit {
     {
       return "http://localhost:8080/api/pokergame" + "/images/gray_back.png";
     }
+    else
+    {
+      return card.imagePath;
+    }
   }
 
   ngOnInit() {
   }
+
+  compareCards = ( obj1 : Card, obj2 : Card ) => obj1.number === obj2.number && obj1.suit === obj2.suit;
 
 }
