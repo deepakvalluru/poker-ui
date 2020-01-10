@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
 
   title = 'poker-ui';
   game : Game
-  activeCard : ActiveCardPosition
+  activeCard : ActiveCardPosition = new ActiveCardPosition( false, true, "flop1", null );
   dealtCard : Card
 
   constructor( private pokerService : PokerService )
@@ -41,7 +41,10 @@ export class AppComponent implements OnInit {
   receiveActivePositionEvent($event : ActiveCardPosition) 
   {
     this.activeCard = $event
-    console.log( "ActiveCardPosition Event Received in App Component: "+this.activeCard.isBoard + " - " + this.activeCard.cardPosition );
+    if( this.activeCard != undefined )
+    {
+      console.log( "ActiveCardPosition Event Received in App Component: "+this.activeCard.isBoard + " - " + this.activeCard.cardPosition );
+    }
   }
 
   receiveGameEvent( $event : Game )
@@ -53,6 +56,9 @@ export class AppComponent implements OnInit {
   receiveDealtCardEvent($event : Card )
   {
     this.dealtCard = $event;
-    console.log( "Dealt Card Event Received in App Component : "  +  this.dealtCard.number + " - " + this.dealtCard.suit );
+    if( this.dealtCard != undefined )
+    {
+      console.log( "Dealt Card Event Received in App Component : "  +  this.dealtCard.number + " - " + this.dealtCard.suit );
+    }
   }
 }

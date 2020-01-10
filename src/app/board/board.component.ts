@@ -3,6 +3,10 @@ import { SetOfCards } from '../model/SetOfCards';
 import { Card } from '../model/Card';
 import { ActiveCardPosition } from '../model/ActiveCardPosition';
 import { EventEmitter } from '@angular/core';
+import { Game } from '../model/Game';
+import { Player } from '../model/Player';
+import { CardDeal } from '../model/CardDeal';
+import { PokerService } from '../poker.service';
 
 @Component({
   selector: 'app-board',
@@ -11,9 +15,9 @@ import { EventEmitter } from '@angular/core';
 })
 export class BoardComponent implements OnInit {
 
-  constructor() { }
+  constructor( private pokerService: PokerService ) { }
 
-  private _board : SetOfCards
+  private _game : Game
   private flop1 : Card = new Card(undefined, undefined, undefined, undefined, false);
   private flop2 : Card = new Card(undefined, undefined, undefined, undefined, false);
   private flop3 : Card = new Card(undefined, undefined, undefined, undefined, false);
@@ -25,19 +29,13 @@ export class BoardComponent implements OnInit {
   @Output() 
   activePositionEvent : EventEmitter<ActiveCardPosition> = new EventEmitter();
 
-  @Input()
-  set board( boardCards : SetOfCards )
-  {
-    if( boardCards != null && boardCards != undefined )
-    {
-      this._board = boardCards;
-      for( let i=0; i< this._board.cards.length; i++)
-      {
-        this._board.cards[i].imagePath = "http://localhost:8080/api/pokergame" + this._board.cards[i].imagePath;
-      }  
+  @Output()
+  gameEvent: EventEmitter<Game> = new EventEmitter();
 
-    }
-    
+  @Input()
+  set game(game: Game) {
+    this._game = game;
+    console.log("received input for game in Deck Component");
   }
 
   @Input()
@@ -46,6 +44,30 @@ export class BoardComponent implements OnInit {
     this._activeCard = activeCard;
     if( this._activeCard != undefined && this._activeCard.isBoard == true )
     {
+      let cardPosition : String = this._activeCard.cardPosition;
+
+      switch( cardPosition )
+      {
+        case "flop1":
+          this.flop1.active = true;
+          break;
+        
+        case "flop2":
+          this.flop2.active = true;
+          break;  
+
+        case "flop3":
+          this.flop3.active = true;
+          break;
+
+        case "turn":
+        this.turn.active = true;
+        break;
+
+        case "river":
+        this.river.active = true;
+        break;
+      }
 
     }
   }
@@ -54,7 +76,7 @@ export class BoardComponent implements OnInit {
   set dealtCard( dealtCard : Card )
   {
     this._dealtCard = dealtCard;
-    if( this._activeCard != undefined && this._activeCard.isBoard )
+    if( this._dealtCard != undefined && this._activeCard != undefined && this._activeCard.isBoard )
     {
       let cardPosition : String = this._activeCard.cardPosition;
 
@@ -81,12 +103,9 @@ export class BoardComponent implements OnInit {
         break;
       }
 
-    }
-  }
+      this.activePositionEvent.emit( null );
 
-  get board() : SetOfCards
-  {
-    return this._board;
+    }
   }
 
   selectBoardCard( card : Card, cardPosition : String )
@@ -101,7 +120,60 @@ export class BoardComponent implements OnInit {
       card.active = true;
       this.activePositionEvent.emit( new ActiveCardPosition( false, true, cardPosition, null ) );
     }
-    console.log( "back to deck" + card );
+    else
+    {
+      console.log( "back to deck" + card.number + "-" + card.suit );
+      let cardDeal : CardDeal = new CardDeal(
+        this._game,
+        card,
+        this._activeCard != undefined ? this._activeCard.isPlayer : false,
+        this._activeCard != undefined ? this._activeCard.isBoard : false,
+        new Player(this._activeCard != undefined ? this._activeCard.playerName : null, null)
+      );
+
+      this.pokerService.dealCardBackToDeck(cardDeal).subscribe(
+        data => {
+          this._game = data.game;
+          this.gameEvent.emit(this._game);
+
+          // disable all active
+          this.flop1.active = false;
+          this.flop2.active = false;
+          this.flop3.active = false;
+          this.turn.active  = false;
+          this.river.active = false;
+
+          //enable only one active
+          switch( cardPosition )
+          {
+            case "flop1":
+              this.flop1 = new Card(undefined, undefined, undefined, undefined, true);;
+              break;
+          
+            case "flop2":
+              this.flop2 = new Card(undefined, undefined, undefined, undefined, true);;
+              break;  
+
+            case "flop3":
+              this.flop3 = new Card(undefined, undefined, undefined, undefined, true);;
+              break;
+
+            case "turn":
+              this.turn = new Card(undefined, undefined, undefined, undefined, true);;
+              break;
+
+            case "river":
+              this.river = new Card(undefined, undefined, undefined, undefined, true);;
+              break;
+          }
+          this._activeCard = new ActiveCardPosition( false, true, cardPosition, null ) ;
+          this.activePositionEvent.emit( this._activeCard );
+        }
+    );  
+
+
+    }
+    
   }
 
   getImage( card : Card )

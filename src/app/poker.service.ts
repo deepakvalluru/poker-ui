@@ -28,4 +28,12 @@ export class PokerService {
   });
   }
 
+  dealCardBackToDeck( cardDeal : CardDeal ) : Observable< GameResult >
+  {
+    console.log( JSON.stringify( cardDeal ) );
+    return this.http.post<GameResult>("http://localhost:8080/api/pokergame/dealBackToDeck", cardDeal,   {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  });
+  }
+
 }

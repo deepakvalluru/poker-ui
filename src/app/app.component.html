@@ -2,6 +2,6 @@
 <div *ngIf="game && game.deck">
   <app-deck [game]="game" [activeCard]="activeCard" (gameEvent)="receiveGameEvent($event)" (dealtCardEvent)="receiveDealtCardEvent($event)"></app-deck>
   <br><br>
-  <app-board [activeCard]="activeCard" [dealtCard]="dealtCard" [board]="game.boardCards" (activePositionEvent)="receiveActivePositionEvent($event)"></app-board>
+  <app-board [game]="game" [activeCard]="activeCard" [dealtCard]="dealtCard"  (gameEvent)="receiveGameEvent($event)" (activePositionEvent)="receiveActivePositionEvent($event)"></app-board>
 </div>
 <router-outlet></router-outlet>

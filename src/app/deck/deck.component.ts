@@ -14,13 +14,13 @@ import { EventEmitter } from '@angular/core';
   styleUrls: ["./deck.component.scss"]
 })
 export class DeckComponent implements OnInit {
-  constructor( private pokerService : PokerService  ) {}
+  constructor(private pokerService: PokerService) { }
 
   private _deck: Deck;
   private _activeCard: ActiveCardPosition;
   private _game: Game;
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   @Input()
   set activeCard(activeCard: ActiveCardPosition) {
@@ -28,9 +28,9 @@ export class DeckComponent implements OnInit {
       this._activeCard = activeCard;
       console.log(
         "Event Received in Deck Component: " +
-          this._activeCard.isBoard +
-          " - " +
-          this._activeCard.cardPosition
+        this._activeCard.isBoard +
+        " - " +
+        this._activeCard.cardPosition
       );
     }
   }
@@ -44,11 +44,11 @@ export class DeckComponent implements OnInit {
     console.log("received input for game in Deck Component");
   }
 
-  @Output() 
-  gameEvent : EventEmitter<Game> = new EventEmitter();
+  @Output()
+  gameEvent: EventEmitter<Game> = new EventEmitter();
 
-  @Output() 
-  dealtCardEvent : EventEmitter<Card> = new EventEmitter();
+  @Output()
+  dealtCardEvent: EventEmitter<Card> = new EventEmitter();
 
   getImage(number: String, suit: String) {
     for (let card of this._deck.cards) {
@@ -60,23 +60,27 @@ export class DeckComponent implements OnInit {
   }
 
   dealDeckCard(number: String, suit: String) {
+    if ((this._activeCard == undefined || this._activeCard == null) || (this._activeCard != undefined && !this._activeCard.isBoard && !this._activeCard.isPlayer)) {
+      alert("Select at least one player card / board card to highlight the next dealt card")
+      return;
+    }
     console.log(number + " of " + suit + " dealed");
     let cardDeal = new CardDeal(
       this._game,
       new Card(number, suit, this.getImage(number, suit), false, false),
       this._activeCard != undefined ? this._activeCard.isPlayer : false,
       this._activeCard != undefined ? this._activeCard.isBoard : false,
-      new Player(this._activeCard.playerName, null)
+      new Player(this._activeCard != undefined ? this._activeCard.playerName : null, null)
     );
-    
-    this.pokerService.dealCard( cardDeal ).subscribe(
-      data => 
-      {
+
+    this.pokerService.dealCard(cardDeal).subscribe(
+      data => {
         this._game = data.game;
         this._deck = data.game.deck;
-        this.gameEvent.emit( this._game );
-        this.dealtCardEvent.emit( cardDeal.dealtCard );
-      } 
+        this.gameEvent.emit(this._game);
+        this.dealtCardEvent.emit(cardDeal.dealtCard);
+        this._activeCard = null;
+      }
     );
 
   }
