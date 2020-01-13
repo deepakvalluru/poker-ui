@@ -1,7 +1,6 @@
 <p>board works!</p>
 
 <div class = "board" >
-    <p>showing board</p>
     <img class = "card-image" [src]="getImage(flop1)" (click)="selectBoardCard(flop1, 'flop1' )" [style.border]="flop1.active ? '1px solid red' : 'none'">
     <img class = "card-image" [src]="getImage(flop2)" (click)="selectBoardCard(flop2, 'flop2' )" [style.border]="flop2.active ? '1px solid red' : 'none'">
     <img class = "card-image" [src]="getImage(flop3)" (click)="selectBoardCard(flop3, 'flop3' )" [style.border]="flop3.active ? '1px solid red' : 'none'">

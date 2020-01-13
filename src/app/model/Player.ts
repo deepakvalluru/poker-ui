@@ -1,5 +1,6 @@
 import { SetOfCards } from './SetOfCards'
 import { BestHand } from './BestHand'
+import { Card } from './Card'
 
 export class Player
 {
@@ -10,6 +11,8 @@ export class Player
     bestHand : BestHand
     percentage : number
     active : boolean
+    card1 : Card
+    card2 : Card
 
     constructor( name : String, position : number )
     {

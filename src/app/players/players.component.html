@@ -1,0 +1,14 @@
+<p>players works!</p>
+
+<div class = "players" >
+    <div class="seat" id="seat1">
+        <img class = "card-image" [src]="getImage('player1', 'card1')" (click)="selectPlayerCard('player1', 'card1')" [style.border]="activeCard != undefined && activeCard.playerName==='player1' && activeCard.cardPosition==='card1' ? '1px solid red' : 'none'">
+        <img class = "card-image" [src]="getImage('player1', 'card2')" (click)="selectPlayerCard('player1', 'card2')" [style.border]="activeCard != undefined && activeCard.playerName==='player1' && activeCard.cardPosition==='card2' ? '1px solid red' : 'none'">
+    </div>
+    
+    <div class="seat" id="seat1">
+        <img class = "card-image" [src]="getImage('player2', 'card1')" (click)="selectPlayerCard('player2', 'card1')" [style.border]="activeCard != undefined && activeCard.playerName==='player2' && activeCard.cardPosition==='card1' ? '1px solid red' : 'none'">
+        <img class = "card-image" [src]="getImage('player2', 'card2')" (click)="selectPlayerCard('player2', 'card2')" [style.border]="activeCard != undefined && activeCard.playerName==='player2' && activeCard.cardPosition==='card2' ? '1px solid red' : 'none'">
+    </div>
+
+</div>

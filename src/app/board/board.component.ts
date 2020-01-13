@@ -70,6 +70,14 @@ export class BoardComponent implements OnInit {
       }
 
     }
+    else
+    {
+      this.flop1.active = false;
+      this.flop2.active = false;
+      this.flop3.active = false;
+      this.turn.active  = false;
+      this.river.active = false;
+    }
   }
 
   @Input()
